@@ -7,36 +7,8 @@ on:
     branches: [main, master]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: Install Foundry
-        uses: foundry-rs/foundry-toolchain@v1
-
-      - name: Install dependencies
-        run: |
-          if [ ! -d lib/forge-std ]; then
-            curl -sL https://github.com/foundry-rs/forge-std/archive/refs/tags/v1.9.6.tar.gz | tar xz -C lib
-            mv lib/forge-std-1.9.6 lib/forge-std
-          fi
-          if [ ! -d lib/openzeppelin-contracts ]; then
-            curl -sL https://github.com/OpenZeppelin/openzeppelin-contracts/archive/refs/tags/v5.2.0.tar.gz | tar xz -C lib
-            mv lib/openzeppelin-contracts-5.2.0 lib/openzeppelin-contracts
-          fi
-
-      - name: Format check
-        run: forge fmt --check
-
-      - name: Build
-        run: forge build
-
-      - name: Test
-        run: forge test -vvv
-
-      - name: Coverage summary
-        run: forge coverage --report summary
-        continue-on-error: true
+  ci:
+    uses: predix-sea/predix-platform-ci/.github/workflows/reusable-solidity-ci.yml@main
+    with:
+      fail-on-slither: false
+    secrets: inherit
