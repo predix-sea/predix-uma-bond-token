@@ -4,6 +4,20 @@ Production-grade **PrediX UMA bond / staking-related ERC20** module. Implements 
 
 > This repository is the **bond-token module**. Whether it is wired directly as UMA protocol collateral is determined by deployment configuration and PrediX governance — see [UMA bond deployment checklist](#uma-bond-deployment-checklist) below.
 
+## Relationship to PrediX CTF (not the same module)
+
+| | **This repo (bond)** | **CTF stack** (`predix-ctf-contracts`) |
+|--|----------------------|----------------------------------------|
+| Token standard | ERC20 (+ EIP-2612 permit) | ERC-1155 Conditional Tokens |
+| Role | UMA bond / staking-related supply | Yes/No **outcome** positions (split / merge / redeem) |
+| Typical collateral for markets | Not required to be this token | USDC (mainnet) / Mock ERC20 (tests, Amoy) |
+
+**Do not** describe this bond ERC20 as Gnosis CTF or as Polymarket-style outcome shares.  
+CTF architecture: see sibling repo `predix-ctf-contracts` → `docs/architecture.md`.  
+Oracle lifecycle ↔ CTF: `predix-oracle-ops` → `docs/oracle-ctf-mapping.md`.
+
+Core Solidity in this repository stays unchanged for the CTF改造; only documentation clarifies the boundary.
+
 ## Features
 
 - **ERC20 + ERC20Permit (EIP-2612)**
